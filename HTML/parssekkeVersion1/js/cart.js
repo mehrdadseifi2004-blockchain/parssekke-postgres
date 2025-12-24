@@ -104,7 +104,7 @@ function renderProducts(container, products) {
 
   products.forEach((product) => {
     const wrapper = document.createElement('div');
-    wrapper.className = 'product-thumb';
+    wrapper.className = 'product-thumb clearfix';
     wrapper.innerHTML = `
       <div class="image">
         <a href="product.html">
@@ -124,15 +124,18 @@ function renderProducts(container, products) {
     container.appendChild(wrapper);
   });
 
-  container.addEventListener('click', async (event) => {
-    const target = event.target.closest('.btn-add-to-cart');
-    if (!target) return;
-    const productId = target.getAttribute('data-product-id');
-    if (!productId) return;
-    await addToCart(productId, 1);
-    alert('محصول به سبد افزوده شد.');
-    await refreshMiniCart();
-  });
+  if (!container.dataset.listenerAdded) {
+    container.addEventListener('click', async (event) => {
+      const target = event.target.closest('.btn-add-to-cart');
+      if (!target) return;
+      const productId = target.getAttribute('data-product-id');
+      if (!productId) return;
+      await addToCart(productId, 1);
+      alert('محصول به سبد افزوده شد.');
+      await refreshMiniCart();
+    });
+    container.dataset.listenerAdded = 'true';
+  }
 }
 
 async function renderCartPage() {
