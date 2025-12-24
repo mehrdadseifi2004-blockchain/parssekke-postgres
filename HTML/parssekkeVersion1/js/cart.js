@@ -123,7 +123,21 @@ function renderProducts(container, products) {
     `;
     container.appendChild(wrapper);
   });
-
+// RE-INIT OWL CAROUSEL AFTER PRODUCTS RENDER
+if (window.$ && container.classList.contains('owl-carousel')) {
+  $(container).trigger('destroy.owl.carousel');
+  $(container).owlCarousel({
+    items: 4,
+    margin: 10,
+    nav: true,
+    dots: false,
+    responsive: {
+      0: { items: 1 },
+      600: { items: 2 },
+      1000: { items: 4 }
+    }
+  });
+}
   if (!container.dataset.listenerAdded) {
     container.addEventListener('click', async (event) => {
       const target = event.target.closest('.btn-add-to-cart');
