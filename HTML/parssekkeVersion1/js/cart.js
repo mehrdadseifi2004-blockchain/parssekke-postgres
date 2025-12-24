@@ -318,5 +318,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 export { fetchProducts, addToCart, getCartItems };
+console.log('cart.js loaded');
 
 
